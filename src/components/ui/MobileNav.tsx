@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import clsx from 'clsx'
 import Button from './Button'
@@ -35,6 +36,11 @@ function MenuIcon() {
 
 function MobileNav({ title, links }: MobileNavProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const isClient = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false
+    )
 
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -85,31 +91,35 @@ function MobileNav({ title, links }: MobileNavProps) {
                 </div>
             </nav>
 
-            <div
-                className={clsx(
-                    "fixed inset-0 z-[60] md:hidden bg-black text-white",
-                    "flex flex-col items-center justify-center gap-10 px-8",
-                    "transition-opacity duration-500 ease-in-out",
-                    isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-                )}
-            >
-                {links.map((link, index) => (
-                    <Link
-                        key={link.key}
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        style={{ transitionDelay: isOpen ? `${120 + index * 80}ms` : '0ms' }}
+            {isClient &&
+                createPortal(
+                    <div
                         className={clsx(
-                            "text-4xl sm:text-5xl font-bold tracking-tight",
-                            "hover:opacity-70 active:opacity-50",
-                            "transition-all duration-500 ease-out",
-                            isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                            "fixed inset-0 z-[60] md:hidden bg-black text-white",
+                            "flex flex-col items-center justify-center gap-10 px-8",
+                            "transition-opacity duration-500 ease-in-out",
+                            isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
                         )}
                     >
-                        {link.label}
-                    </Link>
-                ))}
-            </div>
+                        {links.map((link, index) => (
+                            <Link
+                                key={link.key}
+                                href={link.href}
+                                onClick={() => setIsOpen(false)}
+                                style={{ transitionDelay: isOpen ? `${120 + index * 80}ms` : '0ms' }}
+                                className={clsx(
+                                    "text-4xl sm:text-5xl font-bold tracking-tight",
+                                    "hover:opacity-70 active:opacity-50",
+                                    "transition-all duration-500 ease-out",
+                                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                                )}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </div>,
+                    document.body
+                )}
         </>
     )
 }

@@ -12,7 +12,7 @@ function StickyNavWrapper({ children }: { children: React.ReactNode }) {
             const currentY = window.scrollY
             const goingDown = currentY > lastY.current
 
-            if (currentY < 80) {
+            if (currentY < 300) {
                 setHidden(false)
             } else if (goingDown) {
                 setHidden(true)
@@ -30,8 +30,8 @@ function StickyNavWrapper({ children }: { children: React.ReactNode }) {
     return (
         <div
             className={clsx(
-                "sticky top-0 z-50 transition-[top] duration-300 ease-in-out",
-                hidden ? "-top-[6rem]" : "top-0"
+                "sticky top-0 z-[70] transition-transform duration-300 ease-in-out",
+                hidden ? "-translate-y-full" : "translate-y-0"
             )}
         >
             {children}

@@ -1,1 +1,33 @@
-{}
+{
+    "home": {
+        "button": {
+            "test": {
+                "default": "Test Button",
+                "ghost": "Test Ghost Button"
+            }
+        },
+        "hero": {
+            "title": "Title ig xd",
+            "subtitle": "Short description"
+        },
+        "features": {
+            "title": "Some other stuff",
+            "subtitle": "Subtitle"
+        },
+        "cta": {
+            "title": "Contact Temporary",
+            "button": "Contact ig"
+        }
+    },
+    "navbar": {
+        "title": "SITE TITLE",
+        "home": "Home",
+        "option1": "Option 1",
+        "option2": "Option 2",
+        "option3": "Option 3"
+    },
+    "languageSwitcher": {
+        "de": "DE",
+        "en-us": "EN"
+    }
+}

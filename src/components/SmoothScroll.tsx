@@ -13,6 +13,8 @@ function SmoothScroll({ children }: { children: React.ReactNode }) {
     const [lenis, setLenis] = useState<Lenis | null>(null)
 
     useEffect(() => {
+        if (window.matchMedia('(max-width: 767px)').matches) return
+
         const instance = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

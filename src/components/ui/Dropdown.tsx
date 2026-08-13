@@ -77,7 +77,7 @@ function Dropdown({ options, value, onChange, placeholder }: DropdownProps) {
             <div
                 className={clsx(
                     "absolute right-0 top-full mt-2 min-w-[10rem] origin-top-right",
-                    "rounded-2xl border border-white/50 bg-white/80 backdrop-blur-xl shadow-xl shadow-black/10 p-1.5",
+                    "rounded-2xl border border-white/50 bg-white shadow-xl shadow-black/10 p-1.5",
                     "transition-all duration-150 ease-out",
                     isOpen
                         ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"

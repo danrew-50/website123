@@ -18,12 +18,12 @@ async function Navbar() {
     const t = await getTranslations('navbar')
 
     return (
-        <nav className="sticky top-4 z-50 flex items-center px-6 py-2.5 mx-4 rounded-2xl border border-white/40 bg-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-xl shadow-black/10">
-            <div className="font-bold text-lg text-black shrink-0">
+        <nav className="w-full flex items-center justify-between px-8 py-6 border-b border-white/40 bg-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-lg shadow-black/5">
+            <div className="font-bold text-lg text-black leading-tight shrink-0">
                 {t('title')}
             </div>
 
-            <div className="flex-1 flex items-center justify-center gap-1">
+            <div className="flex items-center gap-1">
                 {links.map((link) => (
                     <Button key={link.key} text={t(link.key)} variant="ghost" href={link.href} size="sm" />
                 ))}

@@ -1,31 +1,37 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import { useLenis } from '../SmoothScroll'
 
 function StickyNavWrapper({ children }: { children: React.ReactNode }) {
-    const [scrolled, setScrolled] = useState(false)
-    const lenis = useLenis()
+    const [hidden, setHidden] = useState(false)
+    const lastY = useRef(0)
 
     useEffect(() => {
-        if (!lenis) return
+        function handleScroll() {
+            const currentY = window.scrollY
+            const goingDown = currentY > lastY.current
 
-        function handleScroll({ scroll }: { scroll: number }) {
-            setScrolled(scroll > 40)
+            if (currentY < 80) {
+                setHidden(false)
+            } else if (goingDown) {
+                setHidden(true)
+            } else {
+                setHidden(false)
+            }
+
+            lastY.current = currentY
         }
 
-        lenis.on('scroll', handleScroll)
-        return () => {
-            lenis.off('scroll', handleScroll)
-        }
-    }, [lenis])
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     return (
         <div
             className={clsx(
-                "sticky z-50 transition-[top] duration-300 ease-in-out",
-                scrolled ? "top-4" : "top-6"
+                "sticky top-0 z-50 transition-transform duration-300 ease-in-out",
+                hidden ? "-translate-y-full" : "translate-y-0"
             )}
         >
             {children}
